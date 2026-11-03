@@ -16,11 +16,9 @@ const updateMenuButton = () => {
 
 const updateThemeButton = () => {
   if (body.classList.contains("light-theme")) {
-    localStorage.setItem("theme", "light");
     themeToggleBtn.textContent = "🌙";
     themeToggleBtn.setAttribute("aria-label", "Ativar modo escuro");
   } else {
-    localStorage.setItem("theme", "dark");
     themeToggleBtn.textContent = "☀️";
     themeToggleBtn.setAttribute("aria-label", "Ativar modo claro");
   }
@@ -29,6 +27,12 @@ const updateThemeButton = () => {
 themeToggleBtn.addEventListener("click", () => {
   body.classList.toggle("light-theme");
 
+  if (body.classList.contains("light-theme")) {
+    localStorage.setItem("theme", "light");
+  } else {
+    localStorage.setItem("theme", "dark");
+  }
+
   updateThemeButton();
 });
 
@@ -36,9 +40,9 @@ const savedTheme = localStorage.getItem("theme");
 
 if (savedTheme === "light") {
   body.classList.add("light-theme");
-  themeToggleBtn.textContent = "🌙";
-  themeToggleBtn.setAttribute("aria-label", "Ativar modo escuro");
 }
+
+updateThemeButton();
 
 menuToggleBtn.addEventListener("click", () => {
   mainMenu.classList.toggle("is-open");
